@@ -96,18 +96,13 @@ class CfnParameterOverridesType(click.ParamType):
         for val in value:
             val.strip()
             # Add empty string to start of the string to help match `_pattern2`
-            val = " " + val
+            val = f" {val}"
 
             try:
                 # NOTE(TheSriram): find the first regex that matched.
                 # pylint is concerned that we are checking at the same `val` within the loop,
                 # but that is the point, so disabling it.
-                pattern = next(
-                    i
-                    for i in filter(
-                        lambda item: re.findall(item, val), self.ordered_pattern_match
-                    )  # pylint: disable=cell-var-from-loop
-                )
+                pattern = next(iter(filter(lambda item: re.findall(item, val), self.ordered_pattern_match)))
             except StopIteration:
                 return self.fail(
                     "{} is not in valid format. It must look something like '{}' or '{}'".format(
@@ -304,7 +299,7 @@ class SigningProfilesOptionType(click.ParamType):
         for val in value:
             val.strip()
             # Add empty string to start of the string to help match `_pattern2`
-            val = " " + val
+            val = f" {val}"
 
             signing_profiles = re.findall(self.pattern, val)
 

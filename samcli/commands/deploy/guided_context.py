@@ -192,13 +192,12 @@ class GuidedContext:
         self.guided_s3_prefix = stack_name
         self.guided_region = region
         self.guided_profile = self.profile
-        self._capabilities = input_capabilities if input_capabilities else default_capabilities
-        self._parameter_overrides = (
-            input_parameter_overrides if input_parameter_overrides else self.parameter_overrides_from_cmdline
-        )
+        self._capabilities = input_capabilities or default_capabilities
+        self._parameter_overrides = input_parameter_overrides or self.parameter_overrides_from_cmdline
+
         self.save_to_config = save_to_config
-        self.config_env = config_env if config_env else default_config_env
-        self.config_file = config_file if config_file else default_config_file
+        self.config_env = config_env or default_config_env
+        self.config_file = config_file or default_config_file
         self.confirm_changeset = confirm_changeset
         self.disable_rollback = disable_rollback
 
